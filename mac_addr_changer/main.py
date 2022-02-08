@@ -23,6 +23,7 @@ def get_args():
             parser.error("[-] Please specify an interface, use --help for more info")
         if not options.new_mac:
             options.new_mac = "11:22:33:44:55:66"
+        return options
         
 
 def change_mac(interface, mac_addr):
