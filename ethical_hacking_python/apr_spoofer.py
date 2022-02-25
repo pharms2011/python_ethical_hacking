@@ -26,6 +26,7 @@ def get_args():
         options.target = "10.0.0.65/24"
 
     return options
+
 def get_mac_address(ip):
     arp_req = net_scanner.arp_broadcast_request(ip)
     arp_resp = net_scanner.net_scan(arp_req)
@@ -34,16 +35,15 @@ def get_mac_address(ip):
             mac = resp.mac
     return mac
 
-def spoof_arp():
-    args = get_args()
-    target_ip = args.target
-    arp_req = net_scanner.arp_broadcast_request(target_ip)
-    arp_resp = net_scanner.net_scan(arp_req)
-    target_mac = arp_resp[0].mac
+def spoof_arp(target_ip):
+    # args = get_args()
+    # target_ip = args.target
+    target_mac = get_mac_address(target_ip)
     # router_ip = get_router_ip()
-    router_ip = ""
-    print(target_mac)
-    # packet = scapy.ARP(op = 2, pdst = target_ip, hwdst = target_mac, psrc = router_ip)
+    router_ip = "10.0.0.1"
+    packet = scapy.ARP(op = 2, pdst = target_ip, hwdst = target_mac, psrc = router_ip)
+    print(packet.summary())
 
 if __name__ == '__main__':
     print("Game Over")
+    spoof_arp("10.0.0.5")
